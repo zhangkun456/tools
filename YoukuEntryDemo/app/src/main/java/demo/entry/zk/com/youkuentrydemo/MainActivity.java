@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(MainActivity.this, CaptureActivity.class);
             startActivityForResult(intent, REQUEST_CODE);
 //            openPage("http://www.baidu.com");
-        }else if(view.getId() == R.id.button_scan_last){
+        } else if (view.getId() == R.id.button_scan_last) {
             openPage(mLastUrl);
         } else if (view.getId() == R.id.button_test) {
             Intent intent = new Intent();
@@ -107,18 +108,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String url = "youku://planet/fans_guardian_home?id=174";
             intent.setData(Uri.parse("youku://planet/planet_test?url=" + url));
             startActivity(intent);
+        } else if (view.getId() == R.id.button_weex) {
+            Intent intent = new Intent();
+//            String url = "http://30.17.4.219:8081/weex_tmp/h5_render/?hot-reload_controller&page=index.js&loader=xhr&wh_weex=true";
+//            String url = "https://weex.alibabaplanet.com/wow/planet/act/kaitest9?spm=a312d.7832034.0.0.74333e13mOO7ZH&wh_weex=true";
+            String url = "http://30.17.4.219:8081/index.weex.js?hot-reload_controller=1&_wx_tpl=http://30.17.4.219:8081/index.weex.js";
+            intent.setData(Uri.parse("youku://planet/weex?_wx_tpl=" + url));
+            startActivity(intent);
         } else if (view.getId() == R.id.button_test1) {
             Intent intent = new Intent();
-            String url = "youku://planet/my_community";
+//            String url = "http://30.17.4.219:8081/weex_tmp/h5_render/?hot-reload_controller&page=index.js&loader=xhr";
+            String url = "https://weex.alibabaplanet.com/wow/planet/act/kaitest9?spm=a312d.7832034.0.0.74333e13mOO7ZH&wh_weex=true";
             intent.setData(Uri.parse("youku://planet/planet_test?url=" + url));
             startActivity(intent);
+
+//            try {
+//                Class<?> threadClazz = Class.forName("anetwork.channel.config.NetworkConfigCenter");
+//                Method method = threadClazz.getMethod("setSSLEnabled", Boolean.class);
+//                System.out.println("----result="+method.invoke(false));
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
         }
     }
 
-    private void openPage(String url) {
+    private void openNativePage(String url) {
         Intent intent = new Intent();
         intent.setData(Uri.parse("youku://planet/planet_test?url=" + url));
         startActivity(intent);
+    }
+
+    private void openWeex(String url) {
+        Intent intent = new Intent();
+//            String url = "http://30.17.4.219:8081/weex_tmp/h5_render/?hot-reload_controller&page=index.js&loader=xhr&wh_weex=true";
+//            String url = "https://weex.alibabaplanet.com/wow/planet/act/kaitest9?spm=a312d.7832034.0.0.74333e13mOO7ZH&wh_weex=true";
+        intent.setData(Uri.parse("youku://planet/weex?_wx_tpl=" + url));
+        startActivity(intent);
+    }
+
+    private void openPage(String url) {
+        if (mLastUrl.contains("wh_weex=true")) {
+            openWeex(url);
+        } else {
+            openNativePage(url);
+        }
     }
 
     @Override
