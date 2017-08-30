@@ -1,5 +1,11 @@
 package demo.entry.zk.com.youkuentrydemo;
 
+/**
+ * adb 打开方法
+ * adb shell am start -a android.intent.action.VIEW -d youku://planet/actor_home_page?id=154
+ * adb shell am start -n com.youku.phone/com.youku.ui.demo.DemoEntryActivity
+ */
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
