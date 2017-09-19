@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void openPage(String url) {
-        if (mLastUrl.contains("wh_weex=true")) {
+        if (mLastUrl.contains("wh_weex=true")||mLastUrl.contains("index.weex.js")) {
             openWeex(url);
         } else {
             openNativePage(url);
@@ -179,5 +179,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }
