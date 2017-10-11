@@ -1,0 +1,1 @@
+sh dex2jar.sh --force classes.dex
